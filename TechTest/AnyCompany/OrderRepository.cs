@@ -1,10 +1,11 @@
-﻿using System.Data.SqlClient;
+﻿using System.Configuration;
+using System.Data.SqlClient;
 
 namespace AnyCompany
 {
     internal class OrderRepository
     {
-        private static string ConnectionString = @"Data Source=(local);Database=Orders;User Id=admin;Password=password;";
+        private static string ConnectionString = ConfigurationManager.ConnectionStrings["AnyCompanyDB"].ConnectionString;
 
         public void Save(Order order)
         {

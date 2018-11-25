@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace AnyCompany
 {
     public static class CustomerRepository
     {
-        private static string ConnectionString = @"Data Source=(local);Database=Customers;User Id=admin;Password=password;";
+        private static string ConnectionString = ConfigurationManager.ConnectionStrings["AnyCompanyDB"].ConnectionString;
 
         public static Customer Load(int customerId)
         {
