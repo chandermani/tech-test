@@ -28,6 +28,8 @@ namespace AnyCompany.Tests
 
         public AnyCompanyDBContext AnyCompanyDBContext { get; }
 
+        public string ConnectionString => AnyCompanyDBContext.Database.GetDbConnection().ConnectionString;
+
         public Customer UKCustomer => AnyCompanyDBContext.Customers.FirstOrDefault(c => c.Country == "UK");
 
         public Customer OtherCustomer => AnyCompanyDBContext.Customers.FirstOrDefault(c => c.Country != "UK");

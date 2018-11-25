@@ -3,24 +3,31 @@ using System.Data.SqlClient;
 
 namespace AnyCompany
 {
-    internal class OrderRepository
+    public class OrderRepository : IOrderRepository
     {
-        private static string ConnectionString = ConfigurationManager.ConnectionStrings["AnyCompanyDB"].ConnectionString;
+        private readonly string connectionString;
+
+        public OrderRepository(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
 
         public void Save(Order order)
         {
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            connection.Open();
+            using(SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Orders VALUES (@OrderId, @Amount, @VAT)", connection);
+                SqlCommand command = new SqlCommand("INSERT INTO Orders VALUES (@OrderId, @Amount, @VAT)", connection);
 
-            command.Parameters.AddWithValue("@OrderId", order.OrderId);
-            command.Parameters.AddWithValue("@Amount", order.Amount);
-            command.Parameters.AddWithValue("@VAT", order.VAT);
+                command.Parameters.AddWithValue("@OrderId", order.OrderId);
+                command.Parameters.AddWithValue("@Amount", order.Amount);
+                command.Parameters.AddWithValue("@VAT", order.VAT);
 
-            command.ExecuteNonQuery();
+                command.ExecuteNonQuery();
 
-            connection.Close();
+                connection.Close();
+            }
         }
     }
 }

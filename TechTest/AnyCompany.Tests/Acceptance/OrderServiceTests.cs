@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +73,7 @@ namespace AnyCompany.Tests
 
         private OrderService Build()
         {
-            return new OrderService();
+            return new OrderService(new CustomerRepositoryShim(), new OrderRepository(this.dbFixture.ConnectionString));
         }
     }
 }
