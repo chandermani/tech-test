@@ -69,11 +69,9 @@ namespace AnyCompany.Tests
             result.Should().BeFalse();
         }
 
-
-
         private OrderService Build()
         {
-            return new OrderService(new CustomerRepositoryShim(), new OrderRepository(this.dbFixture.ConnectionString));
+            return new OrderService(new CustomerRepositoryShim(), new OrderRepository(new AnyCompany.Store.AnyCompanyDBContext()));
         }
     }
 }

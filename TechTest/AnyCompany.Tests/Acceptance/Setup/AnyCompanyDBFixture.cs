@@ -10,9 +10,11 @@ namespace AnyCompany.Tests
 {
     public class AnyCompanyDBFixture:IDisposable
     {
+        public Store.AnyCompanyDBContext AnyCompanyDBContext { get; }
+
         public AnyCompanyDBFixture()
         {
-            AnyCompanyDBContext = new AnyCompanyDBContext();
+            AnyCompanyDBContext = new Store.AnyCompanyDBContext();
 
             AddCustomers();
         }
@@ -25,8 +27,6 @@ namespace AnyCompany.Tests
             AnyCompanyDBContext.Customers.Add(new Customer() { Name = "Sam", Country = "UK", DateOfBirth = new DateTime(1994, 1, 1) });
             AnyCompanyDBContext.SaveChanges();
         }
-
-        public AnyCompanyDBContext AnyCompanyDBContext { get; }
 
         public string ConnectionString => AnyCompanyDBContext.Database.GetDbConnection().ConnectionString;
 

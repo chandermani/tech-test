@@ -141,7 +141,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Acceptance\Setup\AnyCompanyDBContext.cs" />
     <Compile Include="Acceptance\Setup\AnyCompanyDBFixture.cs" />
     <Compile Include="Acceptance\OrderServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

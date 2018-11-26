@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AnyCompany.Tests
+namespace AnyCompany.Store
 {
-    public class AnyCompanyDBContext : DbContext
+    public class AnyCompanyDBContext : DbContext, IAnyCompanyDBContext
     {
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,6 +23,9 @@ namespace AnyCompany.Tests
         {
             modelBuilder.Entity<Customer>()
                 .ToTable("Customer");
+
+            modelBuilder.Entity<Order>()
+                .ToTable("Order");
 
             base.OnModelCreating(modelBuilder);
         }
