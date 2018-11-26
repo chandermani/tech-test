@@ -14,9 +14,17 @@ namespace AnyCompany.Tests
 
         public AnyCompanyDBFixture()
         {
-            AnyCompanyDBContext = new Store.AnyCompanyDBContext();
-            CleanDB();
+            AnyCompanyDBContext = BuildDBContext();
             AddCustomers();
+        }
+
+        private Store.AnyCompanyDBContext BuildDBContext()
+        {
+            var options = new DbContextOptionsBuilder<Store.AnyCompanyDBContext>()
+               .UseInMemoryDatabase(databaseName: "AnyCompanyDBInMemory")
+               .Options;
+
+            return new Store.AnyCompanyDBContext(options);
         }
 
         private void AddCustomers()
@@ -50,7 +58,6 @@ namespace AnyCompany.Tests
             {
                 if (disposing)
                 {
-                    CleanDB();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -58,12 +65,6 @@ namespace AnyCompany.Tests
 
                 disposedValue = true;
             }
-        }
-
-        private void CleanDB()
-        {
-            AnyCompanyDBContext.Database.ExecuteSqlCommand("DELETE FROM [Orders]");
-            AnyCompanyDBContext.Database.ExecuteSqlCommand("DELETE FROM [Customer]");
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.

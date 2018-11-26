@@ -14,10 +14,13 @@ namespace AnyCompany.Store
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AnyCompanyDBContext()
         {
-            optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["AnyCompanyDB"].ConnectionString);
-            base.OnConfiguring(optionsBuilder);
+        }
+
+        public AnyCompanyDBContext(DbContextOptions<AnyCompanyDBContext> options)
+        : base(options)
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

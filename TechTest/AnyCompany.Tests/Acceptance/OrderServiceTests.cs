@@ -83,10 +83,9 @@ namespace AnyCompany.Tests
 
         private OrderService Build()
         {
-            var context = new AnyCompany.Store.AnyCompanyDBContext();
-            return new OrderService(new CustomerRepositoryShim(),
-                new OrderRepository(context),
-                new Queries.CustomerOrdersQuery(context),
+            return new OrderService(new CustomerRepositoryShim(dbFixture.AnyCompanyDBContext),
+                new OrderRepository(dbFixture.AnyCompanyDBContext),
+                new Queries.CustomerOrdersQuery(dbFixture.AnyCompanyDBContext),
                 new VatCalculator());
         }
     }

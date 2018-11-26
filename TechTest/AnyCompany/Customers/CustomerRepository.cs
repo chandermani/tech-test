@@ -8,11 +8,16 @@ namespace AnyCompany
 {
     public static class CustomerRepository
     {
-        private static string ConnectionString = ConfigurationManager.ConnectionStrings["AnyCompanyDB"].ConnectionString;
+        private static Store.IAnyCompanyDBContext anyCompanyDBContext;
+
+        public static void SetContext(Store.IAnyCompanyDBContext context)
+        {
+            anyCompanyDBContext = context;
+        }
 
         public static Customer Load(int customerId)
         {
-            return new AnyCompanyDBContext().Customers.FirstOrDefault(c => c.CustomerId == customerId);
+            return anyCompanyDBContext.Customers.FirstOrDefault(c => c.CustomerId == customerId);
         }
     }
 }
