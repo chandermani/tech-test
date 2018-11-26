@@ -1,4 +1,10 @@
-- The solution has been developed using ATDD (https://www.agilealliance.org/glossary/atdd/) with focus on acceptance tests
-- Acceptance tests were build and verified before refactoring was done.
-- 
-- The solution does not replace the existing static classes.
+- The solution has been developed using ATDD (https://www.agilealliance.org/glossary/atdd/) with a focus on acceptance tests
+- Acceptance tests were built and verified before refactoring was done.
+- The solution does not replace the existing static classes and works within constraints.
+- The new feature is implemented using the Query paradigm from the command query pattern.
+
+Area of improvements
+- Failing scenarios and failures need to be handled better. Some validations like the customer not present in not handled.
+- We do not use DI framework instead we handcraft the dependencies.
+- The DB model and domain model should be separated to allow us to flexibility to evolve both types of models.
+- As the solution evolved and more complexity is added, we need to add more unit test as acceptance test will not suffice.
