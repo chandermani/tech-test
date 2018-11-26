@@ -2,9 +2,9 @@
 
 namespace AnyCompany
 {
-    internal class VatCalculator
+    public class VatCalculator : IVatCalculator
     {
-        internal double CalculateVat(Customer customer)
+        public double CalculateVat(Customer customer)
         {
             return customer.Country == "UK" ? 0.2d : 0;
         }

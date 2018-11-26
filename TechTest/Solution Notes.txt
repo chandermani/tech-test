@@ -1,0 +1,4 @@
+- The solution has been developed using ATDD (https://www.agilealliance.org/glossary/atdd/) with focus on acceptance tests
+- Acceptance tests were build and verified before refactoring was done.
+- 
+- The solution does not replace the existing static classes.

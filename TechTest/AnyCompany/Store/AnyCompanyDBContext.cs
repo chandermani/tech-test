@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AnyCompany.Queries;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -25,7 +26,7 @@ namespace AnyCompany.Store
                 .ToTable("Customer");
 
             modelBuilder.Entity<Order>()
-                .ToTable("Order");
+                .ToTable("Orders");
 
             base.OnModelCreating(modelBuilder);
         }

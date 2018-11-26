@@ -15,7 +15,7 @@ namespace AnyCompany.Tests
         public AnyCompanyDBFixture()
         {
             AnyCompanyDBContext = new Store.AnyCompanyDBContext();
-
+            CleanDB();
             AddCustomers();
         }
 
@@ -26,6 +26,11 @@ namespace AnyCompany.Tests
             AnyCompanyDBContext.Customers.Add(new Customer() { Name = "Tom", Country = "France", DateOfBirth = new DateTime(1993, 1, 1) });
             AnyCompanyDBContext.Customers.Add(new Customer() { Name = "Sam", Country = "UK", DateOfBirth = new DateTime(1994, 1, 1) });
             AnyCompanyDBContext.SaveChanges();
+
+            AnyCompanyDBContext.Orders.Add(new Order() {OrderId=12323, Amount = 123d, CustomerId = CustomerWithAttachedOrders.CustomerId, VAT = 0 });
+            AnyCompanyDBContext.Orders.Add(new Order() {OrderId=52212, Amount = 13123d, CustomerId = CustomerWithAttachedOrders.CustomerId, VAT = 0 });
+            AnyCompanyDBContext.Orders.Add(new Order() {OrderId=53431, Amount = 16323d, CustomerId = CustomerWithAttachedOrders.CustomerId, VAT = 0 });
+            AnyCompanyDBContext.SaveChanges();
         }
 
         public string ConnectionString => AnyCompanyDBContext.Database.GetDbConnection().ConnectionString;
@@ -33,6 +38,8 @@ namespace AnyCompany.Tests
         public Customer UKCustomer => AnyCompanyDBContext.Customers.FirstOrDefault(c => c.Country == "UK");
 
         public Customer OtherCustomer => AnyCompanyDBContext.Customers.FirstOrDefault(c => c.Country != "UK");
+
+        public Customer CustomerWithAttachedOrders=> AnyCompanyDBContext.Customers.First(c => c.Name == "Tom");
 
         #region IDisposable Support
         private bool disposedValue = false; // To detect redundant calls
@@ -43,8 +50,7 @@ namespace AnyCompany.Tests
             {
                 if (disposing)
                 {
-                    AnyCompanyDBContext.Database.ExecuteSqlCommand("TRUNCATE TABLE [Customer]");
-                    AnyCompanyDBContext.Database.ExecuteSqlCommand("TRUNCATE TABLE [Orders]");
+                    CleanDB();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -52,6 +58,12 @@ namespace AnyCompany.Tests
 
                 disposedValue = true;
             }
+        }
+
+        private void CleanDB()
+        {
+            AnyCompanyDBContext.Database.ExecuteSqlCommand("DELETE FROM [Orders]");
+            AnyCompanyDBContext.Database.ExecuteSqlCommand("DELETE FROM [Customer]");
         }
 
         // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.

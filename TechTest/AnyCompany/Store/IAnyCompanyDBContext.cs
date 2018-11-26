@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AnyCompany.Queries;
+using Microsoft.EntityFrameworkCore;
 
 namespace AnyCompany.Store
 {

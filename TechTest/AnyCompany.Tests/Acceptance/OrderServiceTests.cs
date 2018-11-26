@@ -69,9 +69,25 @@ namespace AnyCompany.Tests
             result.Should().BeFalse();
         }
 
+        [Fact]
+        public void Should_load_all_customer_orders()
+        {
+            _target = Build();
+
+            var result = _target.GetAllCustomerOrders();
+
+            result.Count.Should().Be(4);
+
+            result.FirstOrDefault(c => c.Name == dbFixture.CustomerWithAttachedOrders.Name).Orders.Count.Should().Be(3);
+        }
+
         private OrderService Build()
         {
-            return new OrderService(new CustomerRepositoryShim(), new OrderRepository(new AnyCompany.Store.AnyCompanyDBContext()));
+            var context = new AnyCompany.Store.AnyCompanyDBContext();
+            return new OrderService(new CustomerRepositoryShim(),
+                new OrderRepository(context),
+                new Queries.CustomerOrdersQuery(context),
+                new VatCalculator());
         }
     }
 }
